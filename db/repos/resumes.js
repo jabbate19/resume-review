@@ -23,7 +23,7 @@ class ResumesRepository {
     add(values) {
         return this.db.one(sql.add, {
            id: values.id,
-           author: values.author,
+           uid: values.uid,
            filename: values.filename,
            date: values.date,
         });
@@ -43,9 +43,9 @@ class ResumesRepository {
         });
     }
 
-    findByAuthor(author) {
+    findByAuthor(uid) {
         return this.db.any(sql.findByAuthor, {
-            author,
+            uid,
         });
     }
 

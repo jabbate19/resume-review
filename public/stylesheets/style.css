@@ -104,3 +104,115 @@ input[name=body] {
 .badges .badge {
   margin-left: 5px;
 }
+
+.navbar-user img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-right: .3rem
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+}
+.dropdown-toggle {
+  white-space: nowrap;
+}
+
+.navbar-brand {
+  display: inline-block;
+  padding-top: .34766rem;
+  padding-bottom: .34766rem;
+  margin-right: 1rem;
+  font-size: 1.01562rem;
+  line-height: inherit;
+  white-space: nowrap
+}
+
+.navbar-brand {
+  font-size: 24px;
+  padding-left: 10rem;
+  background: url("../images/logo.png") 0/2.5rem no-repeat;
+  background-size: 150px;
+}
+
+.dropdown-toggle {
+  white-space: nowrap;
+}
+
+.dropdown-toggle:after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.navbar-expand-lg .navbar-nav {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.ml-auto, .mx-auto {
+  margin-left: auto!important;
+}
+
+.bg-gray {
+  background-color: var(--bs-body-bg-light);
+}
+
+.list-group-item-action:focus, .list-group-item-action:hover {
+  z-index: 1;
+  border: var(--bs--border-width) solid #ff7613;
+  background-color: var(--bs-body-bg-light);
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  border: var(--bs--border-width) solid #ff7613 !important;
+  background-color: var(--bs-body-bg-light) !important;
+}
+
+.card {
+  --bs-card-bg: #616465;
+}
+
+.footer-version {
+  display: block;
+  opacity: .3;
+  margin: 50px auto 20px;
+  text-align: center;
+  color: rgba(255,255,255, 0.95);
+  font-size: .9em;
+}
+
+.badge-dark {
+  color: #fff;
+  background-color: #222;
+}
+
+.badge-info {
+  color: #fff;
+  background-color: #2196f3;
+}
+
+.badge-primary {
+  color: #fff;
+  background-color: #ff7613;
+}
+
+.float-right {
+  float: right!important;
+}
+
+:root {
+  --bs-primary: #0e0e0e !important;
+  --bs-primary-rgb: 14, 14, 14;
+  --bs-body-bg: #212529;
+  --bs-body-bg-light: #26262b;
+  --bs--border-width: 1px;
+  background-color: rgba(var(--bs-body-bg), 1);
+}

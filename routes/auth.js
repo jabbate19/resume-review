@@ -3,13 +3,9 @@ var router = express.Router();
 var passport = require('passport');
 const config = require('../config');
 
-var Strategy = require('passport-openidconnect').Strategy;
+var GoogleStrategy = require('passport-google-oidc');
 
-passport.use(new Strategy({
-    issuer: 'https://sso.csh.rit.edu/auth/realms/csh',
-    authorizationURL: 'https://sso.csh.rit.edu/auth/realms/csh/protocol/openid-connect/auth',
-    tokenURL: 'https://sso.csh.rit.edu/auth/realms/csh/protocol/openid-connect/token',
-    userInfoURL: 'https://sso.csh.rit.edu/auth/realms/csh/protocol/openid-connect/userinfo',
+passport.use(new GoogleStrategy({
     clientID: config.auth.client_id,
     clientSecret: config.auth.client_secret,
     callbackURL: config.auth.callback_url,
@@ -36,10 +32,10 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 router.get('/',
-  passport.authenticate('openidconnect'));
+  passport.authenticate('google', {scope: ['email', 'profile', 'openid']}));
 
-router.get('/callback',
-  passport.authenticate('openidconnect', { failureRedirect: '/' }),
+router.get('/auth/callback',
+  passport.authenticate('google', { failureRedirect: '/', scope: ['email', 'profile', 'openid'] }),
   function(req, res, next) {
     res.redirect('/');
   });

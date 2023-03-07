@@ -11,13 +11,13 @@ block content
           each item in data
             div.card
               div.card-body
-                p
-                  img(src='https://profiles.csh.rit.edu/image/' + item.author, class='profile')
-                  strong #{item.author} 
+                p.text-white
+                  img(src=owner.photo, class='profile')
+                  strong #{owner.name} 
                   span.badge.badge-primary.badge-pill.float-right #{moment(item.date + ' +0000').fromNow()} 
                   if !item.preview
                     a(href='#', onClick='previewResume(event)', data-id=item.id, class='btn btn-sm btn-secondary') Toggle outdated
-                  if canEdit(user.preferred_username, item.author)
+                  if canEdit(user.sub, item.uid)
                     a(data-parent=item.id, href="/resumes/delete/" + item.id, class='btn btn-sm btn-danger float-right')
                       i(class='fas fa-trash-alt')
                 div(id=item.id, class=item.preview ? '' : 'collapsed')
@@ -34,7 +34,7 @@ block content
                       .col-9.col-md-10
                         input(class="comment-input" name='body', type='text', placeholder='New comment')
                       .col-3.col-md-2
-                        input(type='button', value='Post', onclick="sendComment(event)", class='btn btn-primary')
+                        input(type='button', value='Post', onclick="sendComment(event)", class='btn btn-success')
             if item.preview && data.length > 1
               small
                 | Outdated

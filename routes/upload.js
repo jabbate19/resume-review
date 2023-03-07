@@ -47,13 +47,13 @@ router.post('/',
       }
       // if not found, upload it
       var filename = req.body.title || req.file.originalname;
-      var authorUsername = req.user._json.preferred_username;
+      var authorUid = req.user._json.sub;
       var date = new Date().toISOString().slice(0, 19).replace('T', ' '); // sql format
       // add to DB
       db.resumes.add({
         id: id,
+        uid: authorUid,
         filename: filename,
-        author: authorUsername,
         date: date,
       }).then(() => {
         // add to S3
@@ -65,18 +65,18 @@ router.post('/',
         };
         s3.putObject(params, function(error, data) {
           if (error) {
-            res.send('Could not upload file');
+            res.send(`Could not upload file: ${error}`);
             console.log('Could not upload file');
           } else {
-            res.redirect('/resumes/view/user/' + authorUsername);
+            res.redirect('/resumes/view/user/' + authorUid);
           }
         })
-      }).catch(() => {
-        res.send('Could not upload file');
+      }).catch((error) => {
+        res.send(`Could not upload file: ${error}`);
       });
     })
     .catch((error) => {
-      res.send('Could not upload file');
+      res.send(`Could not upload file: ${error}`);
     });
   });
 

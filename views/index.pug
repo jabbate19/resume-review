@@ -4,18 +4,18 @@ block head
   script(src='https://kit.fontawesome.com/8da32cc80b.js')
 
 block content
-  .container
-    .row
-      .col.col-lg-8.offset-lg-2
-        ul.list-group
+  .container.bg-dark
+    .row.bg-dark
+      .col.col-lg-8.offset-lg-2.bg-dark
+        ul.list-group.bg-gray
           if !resumes.length
-            h2.text-center No resumes found. 
+            h2.text-center.text-white No resumes found. 
               a(href="/upload/") Click here 
               | to upload one!
           each resume in resumes
-              a.list-group-item.list-group-item-action(href='/resumes/view/user/' + resume.author)
-                img(src='https://profiles.csh.rit.edu/image/' + resume.author, class='profile')
-                b #{resume.author}
+              a.list-group-item.bg-gray.text-white.list-group-item-action(href='/resumes/view/user/' + resume.uid)
+                img(src=resume.photo, class='profile', referrerpolicy="no-referrer")
+                b #{resume.name}
                 span.badges
                   span.badge.badge-primary.badge-pill.float-right #{moment(resume.date + ' +0000').fromNow()}
                   if resume.comment_count > 0

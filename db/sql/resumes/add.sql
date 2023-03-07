@@ -1,3 +1,3 @@
 insert into resumes
-values(${id}, ${author}, ${filename}, ${date})
+values(${id}, ${uid}, ${filename}, ${date})
 returning *

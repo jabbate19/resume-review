@@ -24,7 +24,7 @@ class CommentsRepository {
         return this.db.one(sql.add, {
             id: values.id,
             parent_id: values.parent_id,
-            author: values.author,
+            uid: values.uid,
             body: values.body,
             date: values.date,
         });

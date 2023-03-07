@@ -1,2 +1,2 @@
 select * from resumes
-where author = ${author}
+where uid = ${uid}

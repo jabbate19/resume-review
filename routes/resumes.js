@@ -64,29 +64,33 @@ function deleteChildComments(id) {
 
 router.get('/view/user/:uid',
   (req, res, next) => {
-    db.resumes.findByAuthor(req.params.uid).then(resumes => {
-      if (resumes) {
-        Promise.all(resumes.map(resume => buildCommentThreads(resume.id)))
-          .then(comments => {
-            const data = resumes
-              .map(
-                (resume, index) => Object.assign(resume, { url: getUrl(resume.id), comments: comments[index] })
-              )
-              .sort(
-                (a, b) => new Date(b.date) - new Date(a.date)
-              );
-            data[0].preview = true; // preview only the most recent resume by default
-            res.render('viewMany', { data, user: req.user._json, canEdit, moment });
-          })
-      }
-    });
+    db.users.find(req.params.uid).then(owner => {
+      db.resumes.findByAuthor(req.params.uid).then(resumes => {
+        if (resumes) {
+          Promise.all(resumes.map(resume => buildCommentThreads(resume.id)))
+            .then(comments => {
+              const data = resumes
+                .map(
+                  (resume, index) => Object.assign(resume, { url: getUrl(resume.id), comments: comments[index] })
+                )
+                .sort(
+                  (a, b) => new Date(b.date) - new Date(a.date)
+                );
+              if (data.length >= 1) {
+                data[0].preview = true; // preview only the most recent resume by default
+              }
+              res.render('viewMany', { data, owner, user: req.user._json, canEdit, moment });
+            })
+        }
+      });
+    }) 
   });
 
 router.get('/delete/:id',
   (req, res, next) => {
     db.resumes.find(req.params.id)
     .then(data => {
-      if (canEdit(req.user._json.preferred_username, data.author)) {
+      if (canEdit(req.user.id, data.uid)) {
         deleteChildComments(req.params.id);
         db.resumes.delete(req.params.id)
         .then(() => {

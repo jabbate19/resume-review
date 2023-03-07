@@ -39,5 +39,13 @@ export default {
         find: sql('comments/find.sql'),
         findByParent: sql('comments/findByParent.sql'),
         delete: sql('comments/delete.sql'),
+    },
+    users: {
+        create: sql('users/create.sql'),
+        add: sql('users/add.sql'),
+        delete: sql('users/delete.sql'),
+        drop: sql('users/drop.sql'),
+        empty: sql('users/empty.sql'),
+        find: sql('users/find.sql')
     }
 };

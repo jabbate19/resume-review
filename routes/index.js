@@ -11,7 +11,7 @@ router.get('/',
       .then(data => {
         res.render('index', { resumes: data, user: req.user._json, moment, homeActive: true });
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(`"ERROR: ${error}`));
   });
 
 export default router;

@@ -5,18 +5,18 @@ mixin deleteButton(comment)
 
 mixin displayComment(comment, isResponse)
   if isResponse
-    li.list-group-item.comment.response
-      img(src='https://profiles.csh.rit.edu/image/' + comment.author, class='profile')
-      strong #{comment.author}
+    li.list-group-item.text-white.comment.response
+      img(src=comment.photo, class='profile')
+      strong #{comment.name}
       | : 
       | #{comment.body}
       div.d-md-inline
         span.badge.badge-secondary.badge-pill.float-md-right #{moment(comment.date + ' +0000').fromNow()}
         +deleteButton(comment)
   else
-    li.list-group-item.comment
-      img(src='https://profiles.csh.rit.edu/image/' + comment.author, class='profile')
-      strong #{comment.author}
+    li.list-group-item.text-white.comment
+      img(src=comment.photo, class='profile')
+      strong #{comment.name}
       | : 
       | #{comment.body}
       div.d-md-inline
