@@ -29,6 +29,14 @@ class UsersRepository {
         });
     }
 
+    update(values) {
+        return this.db.none(sql.update, {
+           uid: values.uid,
+           name: values.name,
+           photo: values.photo,
+        });
+    }
+
     all() {
         return this.db.any('select * from users order by uid desc');
     }

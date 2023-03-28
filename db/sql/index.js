@@ -46,6 +46,7 @@ export default {
         delete: sql('users/delete.sql'),
         drop: sql('users/drop.sql'),
         empty: sql('users/empty.sql'),
-        find: sql('users/find.sql')
+        find: sql('users/find.sql'),
+        update: sql('users/update.sql'),
     }
 };

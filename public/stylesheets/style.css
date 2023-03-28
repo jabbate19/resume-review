@@ -208,6 +208,10 @@ input[name=body] {
   float: right!important;
 }
 
+.footer-version {
+  opacity: 1!important;
+}
+
 :root {
   --bs-primary: #0e0e0e !important;
   --bs-primary-rgb: 14, 14, 14;

@@ -12,6 +12,7 @@ import s3 from '../s3.js';
 
 const router = express.Router();
 const upload = multer();
+const dateRegex = /[\s-:]/g;
 
 router.get('/',
   (req, res) => {
@@ -38,48 +39,37 @@ router.post('/',
     }
     parsePdf(req.file.buffer)
     .then(_ => {
-      var id = hasha(req.file.buffer, {algorithm: 'md5'});
-      // check if resume is already uploaded
-      db.resumes.find(id)
-      .then((data) => {
-        if (data) {
-          res.status(400).send('File already uploaded.');
-          return;
-        }
-        // if not found, upload it
-        var filename = req.body.title || req.file.originalname;
-        var authorUid = req.user._json.sub;
-        var date = new Date().toISOString().slice(0, 19).replace('T', ' '); // sql format
-        // add to DB
-        db.resumes.add({
-          id: id,
-          uid: authorUid,
-          filename: filename,
-          date: date,
-        }).then(() => {
-          // add to S3
-          let params = {
-            Bucket: config.s3.bucket,
-            Key: id,
-            Body: req.file.buffer,
-            ContentType: 'application/pdf',
-          };
-          s3.putObject(params, function(error, data) {
-            if (error) {
-              res.send(`Could not upload file: ${error}`);
-              console.log('Could not upload file');
-            } else {
-              res.redirect('/resumes/view/user/' + authorUid);
-            }
-          })
-        }).catch((error) => {
-          res.send(`Could not upload file: ${error}`);
-        });
-      })
-      .catch((error) => {
+      // if not found, upload it
+      var filename = req.body.title || req.file.originalname;
+      var authorUid = req.user._json.sub;
+      var date = new Date().toISOString().slice(0, 19).replace('T', ' '); // sql format
+      var date_file = date.replaceAll(dateRegex, '_');
+      // add to DB
+      db.resumes.add({
+        id: `${req.user._json.family_name}${req.user._json.given_name}Resume${date_file}.pdf`,
+        uid: authorUid,
+        filename: filename,
+        date: date,
+      }).then(() => {
+        // add to S3
+        let params = {
+          Bucket: config.s3.bucket,
+          Key: `${req.user._json.family_name}${req.user._json.given_name}Resume${date_file}.pdf`,
+          Body: req.file.buffer,
+          ContentType: 'application/pdf',
+        };
+        s3.putObject(params, function(error, data) {
+          if (error) {
+            res.send(`Could not upload file: ${error}`);
+            console.log('Could not upload file');
+          } else {
+            res.redirect('/resumes/view/user/' + authorUid);
+          }
+        })
+      }).catch((error) => {
         res.send(`Could not upload file: ${error}`);
-      })
-      })
+      });
+    })
     .catch(e => {
       res.status(500).render('upload', { user: req.user._json, error: `${e.name}: ${e.message}` });
     });
