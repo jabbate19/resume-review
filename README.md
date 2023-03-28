@@ -7,6 +7,14 @@ Members can prepare for career fairs, company visits, and job applications by ru
 their peers, requesting specific changes or just asking for general opinions.
 The site was made using Express, a Node.js framework.
 
+## Dependent Infrastructure
+
+This website requires the following aspects to function:
+- Google OAuth2 Credentials
+- S3 Bucket Interface (Ex. [Minio](https://min.io)
+- PostgreSQL Database
+  - SQL Files to create tables are within the `sql/` directory.
+
 ## Developing locally
 
 ### NodeJS Bare Metal
@@ -60,4 +68,4 @@ If you are deadset on using something else, you will need to reach out to an Ops
 
 ## Credits
 
-This project was inpsired from ![Computer Science House's Resume Review](https://github.com/computersciencehouse/resume-review)
+This project was inpsired from [Computer Science House's Resume Review](https://github.com/computersciencehouse/resume-review)
