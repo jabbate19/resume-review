@@ -11,7 +11,7 @@ The site was made using Express, a Node.js framework.
 
 This website requires the following aspects to function:
 - Google OAuth2 Credentials
-- S3 Bucket Interface (Ex. [Minio](https://min.io)
+- S3 Bucket Interface (Ex. [Minio](https://min.io))
 - PostgreSQL Database
   - SQL Files to create tables are within the `sql/` directory.
 
