@@ -10,9 +10,12 @@ import config from '../config.js';
 import db from '../db/index.js';
 import s3 from '../s3.js';
 
+import discord from 'discord.js';
+
 const router = express.Router();
 const upload = multer();
 const dateRegex = /[\s-:]/g;
+const webhookClient = new discord.WebhookClient({url: config.discordWebhookUrl});
 
 router.get('/',
   (req, res) => {
@@ -65,7 +68,10 @@ router.post('/',
           } else {
             res.redirect('/resumes/view/user/' + authorUid);
           }
-        })
+        });
+	webhookClient.send({
+            content: `${req.user.displayName} has uploaded a new resume to https://resume-review.ritsec.cloud !`
+	});
       }).catch((error) => {
         res.send(`Could not upload file: ${error}`);
       });

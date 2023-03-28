@@ -14,7 +14,6 @@ import resumes from './routes/resumes.js';
 import upload from './routes/upload.js';
 import comment from './routes/comment.js';
 // importing this module will schedule the job that communicates with ResumeBot
-import resumeBot from './slackbot.js';
 import db from './db/index.js';
 
 
@@ -78,7 +77,13 @@ const requireAuth = (req, res, next) => {
   if (req.user) {
     db.users.find(req.user.id)
       .then(data => {
-        if (data == null) {
+        if (data) {
+          db.users.update({
+            uid: req.user.id,
+            name: req.user._json.name,
+            photo: req.user._json.picture
+          });
+        } else {
           db.users.add({
             uid: req.user.id,
             email: req.user.email,
